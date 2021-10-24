@@ -100,9 +100,9 @@ public class ACTrie {
 
     /**
      * 通过字典文件构建AC自动机
-     * @param path 字典文件的地址
+     * @param dict_path 字典文件的地址
      */
-    public ACTrie(String path) {
+    public ACTrie(String dict_path) {
         change_lock = false;
         root = new ACTrie_node();
         root.fail = root;
@@ -110,7 +110,7 @@ public class ACTrie {
 
         FileReader dict_reader = null;
         try {
-            dict_reader = new FileReader(path);
+            dict_reader = new FileReader(dict_path);
             BufferedReader buf_reader = new BufferedReader(dict_reader);
 
             // 层层读入
@@ -246,7 +246,7 @@ public class ACTrie {
     }
 
     /**
-     * 广度遍历输出整棵树，第一个输出的节点是root节点
+     * 广度遍历输出整棵树，第一个输出的节点是root节点，每个节点的输出的字符串来源于接口，空字符串默认不输出。
      * @param str_func 输出每个节点信息的函数
      */
     public void travel_through(ACTrie_node.ACTrie_node_stringer str_func) {
@@ -257,7 +257,9 @@ public class ACTrie {
             var top = bfs_queue.poll();
             top.next.forEach((key, val) -> {
                 bfs_queue.add(val);
-                System.out.println(str_func.fetchString(key, val));
+                var line = str_func.fetchString(key, val);
+                if (!line.equals(""))
+                    System.out.println(line);
             });
         }
     }

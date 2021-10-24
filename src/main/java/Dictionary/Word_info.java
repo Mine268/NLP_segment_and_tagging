@@ -2,6 +2,7 @@ package Dictionary;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 // 这个类描述了一个单词的信息
@@ -29,18 +30,21 @@ public class Word_info {
      * @param wi 词性信息
      */
     public void append_type(Word_info wi) {
-        int size = type_freqList.size();
-        for (int i = 0; i < wi.type_freqList.size(); ++i) {
-            int j;
-            type_freq cur = null;
-            type_freq ind = null;
-            for (j = 0; j < size
-                    && (ind = wi.type_freqList.get(i)).equals((cur = type_freqList.get(j))); ++j) ;
-            if (j == size) {
-                assert cur != null;
-                add_type(cur.type, cur.freq);
+        for (var tf : wi.type_freqList) {
+            var it = type_freqList.iterator();
+            type_freq context = null;
+            boolean find = false;
+            while (it.hasNext()) {
+                context = it.next();
+                // do `=` not `==`
+                if (find = tf.type.equals(context.type))
+                    break;
+            }
+
+            if (find) {
+                context.freq += tf.freq;
             } else {
-                ind.freq += cur.freq;
+                add_type(tf.type, tf.freq);
             }
         }
     }
