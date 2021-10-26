@@ -13,4 +13,12 @@ public class Seg_unit {
     public String toString() {
         return String.format("[index: %d, word: [%s]]", index, word);
     }
+
+    /**
+     * 返回一个拷贝
+     * @return 拷贝
+     */
+    public Seg_unit copy() {
+        return new Seg_unit(word.copy(), index);
+    }
 }

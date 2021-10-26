@@ -45,8 +45,25 @@ public class Segment {
      * 返回分词单元原始数据
      * @return 分词单元原始数据
      */
-    public final List<Seg_unit> getRaw() {
+    public final List<Seg_unit> get_raw() {
         return segment;
+    }
+
+    /**
+     * 获取第 {@code index} 个 {@code Seg_unit}
+     * @param index 索引
+     * @return 返回那个分词单元
+     */
+    public Seg_unit get_which(int index) {
+        return segment.get(index);
+    }
+
+    /**
+     * 获取词性的个数
+     * @return 词性的个数
+     */
+    public int length() {
+        return segment.size();
     }
 
     @Override
@@ -54,4 +71,11 @@ public class Segment {
         return new ArrayList<>(segment).toString();
     }
 
+    /**
+     * 返回一个拷贝
+     * @return 拷贝
+     */
+    public Segment copy() {
+        return new Segment(segment);
+    }
 }

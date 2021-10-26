@@ -4,13 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 // 这个类描述了一个单词的信息
 public class Word_info {
 
-    protected static class type_freq {
-        protected String type;
-        protected int freq;
+    public static class type_freq {
+        public String type;
+        public int freq;
 
         public type_freq(String vtype, int vfreq) {
             type = vtype;
@@ -54,6 +55,11 @@ public class Word_info {
         return this;
     }
 
+    /**
+     * 获取这个词作为词性 {@code t} 出现的频率
+     * @param t 词性
+     * @return 频率
+     */
     public int get_freq_of_type(String t) {
         return type_freqList.stream()
                 .filter(x -> x.type.equals(t))
@@ -65,10 +71,22 @@ public class Word_info {
         return type_freqList.size();
     }
 
+    /**
+     * 返回该词语的频率和
+     * @return 频率和
+     */
     public int get_type_sum_by_freq() {
         return type_freqList.stream()
                 .map(x -> x.freq)
                 .reduce(0, Integer::sum);
+    }
+
+    /**
+     * 返回一个列表的流
+     * @return 流
+     */
+    public Stream<type_freq> stream() {
+        return type_freqList.stream();
     }
 
     @Override

@@ -160,7 +160,7 @@ public class SegmentGrader {
                                 .collect(Collectors.toList());
                         // 这个句子经过dict得到的分词结果
                         var test_sep = dict.segment(Arrays.stream(line_array)
-                                .reduce("", String::concat)).getRaw();
+                                .reduce("", String::concat)).get_raw();
 
                         // 当前索引到的目标字符串中的位置
                         int golden_index = 0;

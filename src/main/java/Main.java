@@ -1,16 +1,49 @@
+import Dictionary.Seg_unit;
+import Dictionary.Segment;
+import Dictionary.Word;
 import Utils.*;
 
 public class Main {
     public static void main(String[] args) {
-        HMMTagger hmt = new HMMTagger();
-        hmt.insert_line("2013年12月9日/t ，/w [俄罗斯/nsf 总统/nnt]/nz 普京/nrf 下令/v 在/p 三个月/t 内/f 将/d " +
-                "《/w 俄新社/nt 》/w 和/cc 《/w [俄罗斯/nsf 之/uzhi 声/qv]/nz 》/w 电台/nis 合并/v 为/p 《/w" +
-                " [今日/t 俄罗斯/nsf]/nz 》/w [国际/n 通讯社/nis]/nt 。/w ");
-        hmt.print_dictionary((x, y) -> {
-            if (y.terminate)
-                return y.word.toString();
-            else
-                return "";
-        });
+        HMMTagger hmt = new HMMTagger("data/2014_corpus.txt");
+        var r = hmt.tag(new Segment()
+                .add_segment(new Seg_unit(new Word("热烈"), 0))
+                .add_segment(new Seg_unit(new Word("庆祝"), 0))
+                .add_segment(new Seg_unit(new Word("中华人民共和国"), 0))
+                .add_segment(new Seg_unit(new Word("成立"), 0))
+                .add_segment(new Seg_unit(new Word("七"), 0))
+                .add_segment(new Seg_unit(new Word("十"), 0))
+                .add_segment(new Seg_unit(new Word("周年"), 0)));
+        System.out.println(r);
+//        hmt.print_dictionary((x, y) -> {
+//            if (y.terminate) {
+//                return y.word.toString();
+//            } else
+//                return "";
+//        });
+
+//        HMMTagger hmt = new HMMTagger();
+//        hmt.insert_line("欢迎/v 朋友/n");
+//        hmt.insert_line("欢迎/v 回家/v");
+//        hmt.insert_line("朋友/n 回家/v");
+//        hmt.insert_line("回家/n 朋友/n");
+//        hmt.insert_line("欢迎/v 欢迎/v");
+//        hmt.insert_line("朋友/n 欢迎/v");
+//        hmt.buildup();
+//
+//        Segment seg = new Segment();
+//        seg.add_segment(new Seg_unit(new Word("欢迎"), 0));
+//        seg.add_segment(new Seg_unit(new Word("朋友"), 0));
+//        seg.add_segment(new Seg_unit(new Word("回家"), 0));
+//
+//         var rs = hmt.tag(seg);
+//        System.out.println(rs);
+
+//        hmt.print_dictionary((x, y) -> {
+//            if (y.terminate && y.word.info.get_type_sum_by_freq() > 1000) {
+//                return y.word.toString();
+//            } else
+//                return "";
+//        });
     }
 }

@@ -11,7 +11,7 @@ import Dictionary.*;
 
 /**
  * AC自动机，添加词语并进行建构后不可删除，用于在一个字符串上一次匹配多个字符，添加词语通过方法{@code add_word}或{@code add_words}或构造方法
- * {@code ACTrie(List<Word> words)}进行，构建通过方法{@code buildup}进行。<br/>
+ * {@code ACTrie(List{@literal <Word>} words)}进行，构建通过方法{@code buildup}进行。<br/>
  * TODO: 所有的containKey和get对可以优化
  * @author mine268
  * @version 1.0
@@ -19,7 +19,6 @@ import Dictionary.*;
 public class ACTrie {
     /**
      * AC自动机中的节点
-     * @version 1.0
      */
     public static class ACTrie_node {
         /**
@@ -293,6 +292,27 @@ public class ACTrie {
         }
 
         return collect_result();
+    }
+
+    /**
+     * 获取某一个词语的信息
+     * @param text 词语
+     * @return 词语信息，如果没有这个词语则返回 {@code null}
+     */
+    public final Word get_info_of_word(String text) {
+        var current = root;
+
+        for (int cur_ind = 0; cur_ind < text.length(); ++cur_ind) {
+            var on_char = String.valueOf(text.charAt(cur_ind));
+            current = current.next.get(on_char);
+            if (current == null)
+                break;
+        }
+
+        if (current != null && current.terminate)
+            return current.word;
+        else
+            return null;
     }
 
     /**
